@@ -11,3 +11,5 @@
 The resulting doc will contain all the images with caption and timestamp and its name will be the same as the user name.
 
 `python instagram-posts-to-e-book.py`
+
+credits - https://github.com/arc298/instagram-scraper

@@ -9,7 +9,7 @@ from instagram_scraper.constants import *
 
 #mention the username here. If private, add login_user and login_pass.
 
-userName = 'chihiro.whispers'
+userName = 'aditya_kumbhar7'
 login_user = None
 login_pass = None
 
@@ -27,8 +27,8 @@ args = {
 	'profile_metadata': True
 }
 
-scraper = InstagramScraper(**args)
-scraper.scrape()
+#scraper = InstagramScraper(**args)
+#scraper.scrape()
 
 with open(userName+"\\"+userName+".json", encoding="utf8") as f:
   data = json.load(f)
@@ -48,6 +48,24 @@ for i in range(len(data["GraphImages"])):
 		tempData = tempData[0].split('/')
 		tempData = tempData[-1]
 		document.add_picture(userName+"\\"+tempData, width=Inches(6))
+		
+		
+		if len(data["GraphImages"][i]["edge_media_to_caption"]["edges"])>0:
+			p = document.add_paragraph('')
+			p.add_run(data["GraphImages"][i]["edge_media_to_caption"]["edges"][0]["node"]["text"].strip()).bold = True
+		
+		
+		document.add_page_break()
+		
+	elif data["GraphImages"][i]["__typename"] == "GraphSidecar":
+		cnt+=1
+		readable = time.ctime(data["GraphImages"][i]["taken_at_timestamp"])
+		document.add_heading('Timestamp:	'+readable, level=3)
+		for j in data["GraphImages"][i]["urls"]:
+			tempData = j.split('?')
+			tempData = tempData[0].split('/')
+			tempData = tempData[-1]
+			document.add_picture(userName+"\\"+tempData, width=Inches(6))
 		
 		
 		if len(data["GraphImages"][i]["edge_media_to_caption"]["edges"])>0:
